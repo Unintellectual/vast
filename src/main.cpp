@@ -2,6 +2,6 @@
 
 int main()
 {
-  std::cout << "Hello World!\n";
-  return 0;
+    std::cout << "test!\n";
+    return 0;
 }
