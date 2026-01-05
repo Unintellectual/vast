@@ -1,4 +1,4 @@
-name: Windows
+name: Windows CI
 
 on:
   push:
@@ -9,45 +9,60 @@ on:
 env:
   BUILD_TYPE: Release
   INSTALL_LOCATION: ".local"
+  GOOGLETEST_VERSION: v1.17.0
 
 jobs:
   build:
-
     runs-on: windows-latest
     if: "!contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[ci skip]')"
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: cache dependencies
-      uses: actions/cache@v4
-      id: cache
       with:
-        path: ${{env.INSTALL_LOCATION}}
-        key: ${{ runner.os }}-dependencies-${{ hashFiles('CMakeLists.txt') }}
+        submodules: recursive
 
-    - name: install GoogleTest
-      if: ${{steps.cache.output.cache-hit != 'true'}}
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Cache Dependencies
+      uses: actions/cache@v4
+      id: cache-deps
+      with:
+        path: ${{ github.workspace }}/${{ env.INSTALL_LOCATION }}
+        key: ${{ runner.os }}-deps-${{ hashFiles('CMakeLists.txt', 'vcpkg.json', 'conanfile.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-deps-
+
+    - name: Install GoogleTest
+      if: steps.cache-deps.outputs.cache-hit != 'true'
       run: |
-        cd ..
-        git clone https://github.com/google/googletest.git --branch v1.17.0
+        mkdir -p deps
+        cd deps
+        git clone https://github.com/google/googletest.git --branch ${{ env.GOOGLETEST_VERSION }}
         cd googletest
-        cmake -Bbuild -DCMAKE_INSTALL_PREFIX="$HOME/$env:INSTALL_LOCATION" -Dgtest_force_shared_crt=1
+        cmake -Bbuild -DCMAKE_INSTALL_PREFIX="${{ github.workspace }}/${{ env.INSTALL_LOCATION }}" -Dgtest_force_shared_crt=1
         cmake --build build --config Release
         cmake --build build --target install --config Release
-        cd ../modern-cpp-template
+        cd ../..
 
-    - name: configure
-      run: cmake -Bbuild -DCMAKE_INSTALL_PREFIX="$HOME/$env:INSTALL_LOCATION"
+    - name: Configure
+      run: |
+        cmake -Bbuild -DCMAKE_INSTALL_PREFIX="${{ github.workspace }}/${{ env.INSTALL_LOCATION }}"
       
-    - name: build
-      run: cmake --build build --config "$env:BUILD_TYPE" -j4
+    - name: Build
+      run: |
+        cmake --build build --config "${{ env.BUILD_TYPE }}" -j$env:NUMBER_OF_PROCESSORS
 
-    - name: run tests
+    - name: Run Tests
       run: |
         cd build
-        ctest -C "$env:BUILD_TYPE" -VV
+        ctest -C "${{ env.BUILD_TYPE }}" -VV
 
-    - name: install project
+    - name: Install Project
       run: cmake --build build --target install --config Release 
 
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-build
+        path: ${{ github.workspace }}/${{ env.INSTALL_LOCATION }}
