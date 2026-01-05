@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Unintellectual/repo_name">
+  <a href="https://github.com/Unintellectual/vast">
     <img src="assets/clippy.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -10,14 +10,14 @@
   <p align="center">
     project_description
 <!--     <br />
-    <a href="https://github.com/Unintellectual/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Unintellectual/vast"><strong>Explore the docs »</strong></a>
     <br />
  -->    <br />
-    <a href="https://github.com/Unintellectual/repo_name">View Demo</a>
+    <a href="https://github.com/Unintellectual/vast">View Demo</a>
     &middot;
-    <a href="https://github.com/Unintellectual/repo_name/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/Unintellectual/vast/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
-    <a href="https://github.com/Unintellectual/repo_name/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/Unintellectual/vast/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
@@ -85,7 +85,7 @@ This is an example of how to list things you need to use the software and how to
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/Unintellectual/repo_name.git
+   git clone https://github.com/Unintellectual/vast.git
    ```
 2. Build && Install
    ```sh
@@ -100,14 +100,41 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+For more examples, please refer to the [Documentation](https://example.com)
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+## Generating the documentation
 
+In order to generate documentation for the project, you need to configure the build
+to use Doxygen. This is easily done, by modifying the workflow shown above as follows:
 
+```bash
+mkdir build/ && cd build/
+cmake .. -DVast_ENABLE_DOXYGEN=1 -DCMAKE_INSTALL_PREFIX=/absolute/path/to/custom/install/directory
+cmake --build . --target doxygen-docs
+```
 
+> ***Note:*** *This will generate a `docs/` directory in the **project's root directory**.*
 
-<!-- ROADMAP -->
+## Running the tests
+
+By default, the template uses [Google Test](https://github.com/google/googletest/)
+for unit testing. Unit testing can be disabled in the options, by setting the
+`ENABLE_UNIT_TESTING` (from
+[cmake/StandardSettings.cmake](cmake/StandardSettings.cmake)) to be false. To run
+the tests, simply use CTest, from the build directory, passing the desire
+configuration for which to run tests for. An example of this procedure is:
+
+```bash
+cd build          # if not in the build directory already
+ctest -C Release  # or `ctest -C Debug` or any other configuration you wish to test
+
+# you can also run tests with the `-VV` flag for a more verbose output (i.e.
+#GoogleTest output as well)
+```
+
+<!-- 
+
+ROADMAP 
 ## Roadmap
 
 - [ ] Feature 1
@@ -115,10 +142,10 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [ ] Feature 3
     - [ ] Nested Feature
 
-See the [open issues](https://github.com/Unintellectual/repo_name/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/Unintellectual/vast/issues) for a full list of proposed features (and known issues).
 
 
-
+ -->
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -135,13 +162,13 @@ Don't forget to give the project a star! Thanks again!
 5. Open a Pull Request
 
 
-### Top contributors:
+<!-- ### Top contributors:
 
-<a href="https://github.com/Unintellectual/repo_name/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Unintellectual/repo_name" alt="contrib.rocks image" />
+<a href="https://github.com/Unintellectual/vast/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Unintellectual/vast" alt="contrib.rocks image" />
 </a>
 
-
+ -->
 
 <!-- LICENSE -->
 ## License
