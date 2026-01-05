@@ -1,4 +1,4 @@
-name: Ubuntu
+name: Ubuntu CI
 
 on:
   push:
@@ -9,49 +9,83 @@ on:
 env:
   BUILD_TYPE: Release
   INSTALL_LOCATION: .local
+  GOOGLETEST_VERSION: v1.17.0
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[ci skip]')"
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
-    - name: cache dependencies
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential \
+          cmake \
+          gcovr \
+          lcov
+
+    - name: Cache Dependencies
       uses: actions/cache@v4
-      id: cache
+      id: cache-deps
       with:
         path: ${{ github.workspace }}/${{ env.INSTALL_LOCATION }}
-        key: ${{ runner.os }}-dependencies-${{ hashFiles('CMakeLists.txt') }}
+        key: ${{ runner.os }}-deps-${{ hashFiles('CMakeLists.txt', 'conanfile.txt', 'vcpkg.json') }}
+        restore-keys: |
+          ${{ runner.os }}-deps-
 
-    - name: install GoogleTest
-      if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+    - name: Install GoogleTest
+      if: steps.cache-deps.outputs.cache-hit != 'true'
       run: |
-        cd ..
-        git clone https://github.com/google/googletest.git --branch v1.17.0
+        mkdir -p deps
+        cd deps
+        git clone https://github.com/google/googletest.git --branch ${{ env.GOOGLETEST_VERSION }}
         cd googletest
-        cmake -Bbuild -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/$INSTALL_LOCATION
+        cmake -Bbuild -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/${{ env.INSTALL_LOCATION }}
         cmake --build build --config Release
         cmake --build build --target install --config Release
+        cd ../..
 
-    - name: configure
-      run: cmake -Bbuild -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/$INSTALL_LOCATION -Dvast_ENABLE_CODE_COVERAGE=1
+    - name: Configure
+      run: |
+        cmake -Bbuild \
+          -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/${{ env.INSTALL_LOCATION }} \
+          -Dvast_ENABLE_CODE_COVERAGE=1 \
+          -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
 
-    - name: build
-      run: cmake --build build --config $BUILD_TYPE -j4
+    - name: Build
+      run: cmake --build build --config ${{ env.BUILD_TYPE }} -j$(nproc)
 
-    - name: run tests
+    - name: Run Tests
       run: |
         cd build
-        ctest -C $BUILD_TYPE -VV
+        ctest -C ${{ env.BUILD_TYPE }} -VV
 
-    - name: Upload coverage to Codecov
+    - name: Generate Coverage Report
+      run: |
+        cd build
+        lcov --capture --directory . --output-file coverage.info
+        lcov --remove coverage.info '/usr/*' --output-file coverage.info
+        gcovr -r .. --xml coverage.xml
+
+    - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v4
       with:
+        files: ./build/coverage.xml
+        flags: unittests
         fail_ci_if_error: false
+        token: ${{ secrets.CODECOV_TOKEN }}
 
-    - name: install project
-      run: cmake --build build --target install --config Release
+    - name: Install Project
+      run: cmake --build build --target install --config ${{ env.BUILD_TYPE }}
 
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ubuntu-build
+        path: ${{ github.workspace }}/${{ env.INSTALL_LOCATION }}
