@@ -99,7 +99,7 @@ to use Doxygen. This is easily done, by modifying the workflow shown above as fo
 
 ```bash
 mkdir build/ && cd build/
-cmake .. -D<project_name>_ENABLE_DOXYGEN=1 -DCMAKE_INSTALL_PREFIX=/absolute/path/to/custom/install/directory
+cmake .. -DVast_ENABLE_DOXYGEN=1 -DCMAKE_INSTALL_PREFIX=/absolute/path/to/custom/install/directory
 cmake --build . --target doxygen-docs
 ```
 
