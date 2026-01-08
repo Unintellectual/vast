@@ -76,9 +76,9 @@ To get a local copy up and running follow these simple example steps.
 
 This is an example of how to list things you need to use the software and how to install them.
   ```md
-  cmake 
-  clang // gcc 
-  git 
+  cmake
+  clang // gcc
+  git
   ```
 
 ### Installation
@@ -92,7 +92,7 @@ This is an example of how to list things you need to use the software and how to
    mkdir build/ && cd build/
    cmake .. -DCMAKE_INSTALL_PREFIX=/absolute/path/to/custom/install/directory
    cmake --build build --target install --config Release
-   # or 
+   # or
    cmake --build <build_directory> --target install --config <desired_config>
    ```
 
@@ -100,41 +100,10 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-For more examples, please refer to the [Documentation](https://example.com)
 
-## Generating the documentation
+<!--
 
-In order to generate documentation for the project, you need to configure the build
-to use Doxygen. This is easily done, by modifying the workflow shown above as follows:
-
-```bash
-mkdir build/ && cd build/
-cmake .. -DVast_ENABLE_DOXYGEN=1 -DCMAKE_INSTALL_PREFIX=/absolute/path/to/custom/install/directory
-cmake --build . --target doxygen-docs
-```
-
-> ***Note:*** *This will generate a `docs/` directory in the **project's root directory**.*
-
-## Running the tests
-
-By default, the template uses [Google Test](https://github.com/google/googletest/)
-for unit testing. Unit testing can be disabled in the options, by setting the
-`ENABLE_UNIT_TESTING` (from
-[cmake/StandardSettings.cmake](cmake/StandardSettings.cmake)) to be false. To run
-the tests, simply use CTest, from the build directory, passing the desire
-configuration for which to run tests for. An example of this procedure is:
-
-```bash
-cd build          # if not in the build directory already
-ctest -C Release  # or `ctest -C Debug` or any other configuration you wish to test
-
-# you can also run tests with the `-VV` flag for a more verbose output (i.e.
-#GoogleTest output as well)
-```
-
-<!-- 
-
-ROADMAP 
+ROADMAP
 ## Roadmap
 
 - [ ] Feature 1
@@ -144,29 +113,6 @@ ROADMAP
 
 See the [open issues](https://github.com/Unintellectual/vast/issues) for a full list of proposed features (and known issues).
 
-
- -->
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
-<!-- ### Top contributors:
-
-<a href="https://github.com/Unintellectual/vast/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Unintellectual/vast" alt="contrib.rocks image" />
-</a>
 
  -->
 
@@ -180,8 +126,8 @@ This project is licensed under the [GPLv2](https://www.gnu.org/licenses/old-lice
 <!-- CONTACT -->
 ## Contact
 
- - [Linkedin](https://www.linkedin.com/in/noah-victoriano-2621343a3/) 
- - [Email](mailto:official.noah.victoriano@gmail.com) 
+ - [Linkedin](https://www.linkedin.com/in/noah-victoriano-2621343a3/)
+ - [Email](mailto:official.noah.victoriano@gmail.com)
 
 
 
