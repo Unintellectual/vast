@@ -1,152 +1,19 @@
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/Unintellectual/vast">
-    <img src="assets/clippy.png" alt="Logo" width="80" height="80">
-  </a>
+# vast
 
-<h3 align="center">project_title</h3>
+This is the vast project.
 
-  <p align="center">
-    project_description
-<!--     <br />
-    <a href="https://github.com/Unintellectual/vast"><strong>Explore the docs »</strong></a>
-    <br />
- -->    <br />
-    <a href="https://github.com/Unintellectual/vast">View Demo</a>
-    &middot;
-    <a href="https://github.com/Unintellectual/vast/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    &middot;
-    <a href="https://github.com/Unintellectual/vast/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
-  </p>
-</div>
+# Building and installing
 
+See the [BUILDING](BUILDING.md) document.
 
+# Contributing
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
+See the [CONTRIBUTING](CONTRIBUTING.md) document.
 
-
-
-<!-- ABOUT THE PROJECT -->
-## About The Project
-
-[![Clippy][product-screenshot]](assets/clippy.png)
-
-
-### Built With
-
-* [![C++][Cpp.logo]][Cpp-url]
-* [![CMake][Cmake.logo]][Cmake-url]
-
-
-
-
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-  ```md
-  cmake
-  clang // gcc
-  git
-  ```
-
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/Unintellectual/vast.git
-   ```
-2. Build && Install
-   ```sh
-   mkdir build/ && cd build/
-   cmake .. -DCMAKE_INSTALL_PREFIX=/absolute/path/to/custom/install/directory
-   cmake --build build --target install --config Release
-   # or
-   cmake --build <build_directory> --target install --config <desired_config>
-   ```
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
+# Licensing
 
 <!--
-
-ROADMAP
-## Roadmap
-
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/Unintellectual/vast/issues) for a full list of proposed features (and known issues).
-
-
- -->
-
-<!-- LICENSE -->
-## License
-
-This project is licensed under the [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) - see the
-[LICENSE](LICENSE) file for details
-
-
-<!-- CONTACT -->
-## Contact
-
- - [Linkedin](https://www.linkedin.com/in/noah-victoriano-2621343a3/)
- - [Email](mailto:official.noah.victoriano@gmail.com)
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* [Wikipedia](https://www.wikipedia.org/)
-* []()
-* []()
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-[product-screenshot]: assets/screenshot.png
-<!-- Shields.io badges. You can a comprehensive list with many more badges at: https://github.com/inttter/md-badges -->
-[Cpp.logo]: https://img.shields.io/badge/C++-00599C?style=flat-square&logo=C%2B%2B&logoColor=white
-[Cpp-url]: https://cplusplus.com/
-[Cmake.logo]: https://img.shields.io/badge/CMake-064F8C?logo=cmake&logoColor=fff
-[Cmake-url]: https://cmake.org/
-[product-screenshot]: assets/clippy.png
+Please go to https://choosealicense.com/licenses/ and choose a license that
+fits your needs. The recommended license for a project of this type is the
+GNU AGPLv3.
+-->
