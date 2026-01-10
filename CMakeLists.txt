@@ -1,36 +1,62 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.14)
 
-project(vast
-    VERSION 0.0.1
+include(cmake/prelude.cmake)
+
+project(
+    vast
+    VERSION 0.1.0
+    DESCRIPTION "Visualizer for abstract syntax trees"
+    HOMEPAGE_URL "https://github.com/Unintellectual/vast"
     LANGUAGES CXX
 )
 
+include(cmake/project-is-top-level.cmake)
+include(cmake/variables.cmake)
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    add_compile_options(
-        -Wall
-        -Wextra
-        -Wpedantic
-    )
+# ---- Declare library ----
 
-        link_libraries(-fsanitize=address -fsanitize=undefined)
+add_library(
+    vast_lib OBJECT
+    source/lib.cpp
+)
 
+target_include_directories(
+    vast_lib ${warning_guard}
+    PUBLIC
+    "\$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/source>"
+)
+
+target_compile_features(vast_lib PUBLIC cxx_std_20)
+
+find_package(fmt REQUIRED)
+target_link_libraries(vast_lib PRIVATE fmt::fmt)
+
+# ---- Declare executable ----
+
+add_executable(vast_exe source/main.cpp)
+add_executable(vast::exe ALIAS vast_exe)
+
+set_property(TARGET vast_exe PROPERTY OUTPUT_NAME vast)
+
+target_compile_features(vast_exe PRIVATE cxx_std_20)
+
+target_link_libraries(vast_exe PRIVATE vast_lib)
+
+# ---- Install rules ----
+
+if(NOT CMAKE_SKIP_INSTALL_RULES)
+  include(cmake/install-rules.cmake)
 endif()
 
+# ---- Developer mode ----
 
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if(NOT vast_DEVELOPER_MODE)
+  return()
+elseif(NOT PROJECT_IS_TOP_LEVEL)
+  message(
+      AUTHOR_WARNING
+      "Developer mode is intended for developers of vast"
+  )
+endif()
 
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
-
-
-include_directories(
-    ${CMAKE_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/includes
-)
-include(GNUInstallDirs)
-
-add_subdirectory(src)
-
-
+include(cmake/dev-mode.cmake)
