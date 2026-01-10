@@ -5,8 +5,8 @@ include(cmake/prelude.cmake)
 project(
     vast
     VERSION 0.1.0
-    DESCRIPTION "Visualizer for abstract syntax trees"
-    HOMEPAGE_URL "https://github.com/Unintellectual/vast"
+    DESCRIPTION "Visualizer for AST"
+    HOMEPAGE_URL "github.com/Unintellectual/vast "
     LANGUAGES CXX
 )
 
@@ -27,9 +27,6 @@ target_include_directories(
 )
 
 target_compile_features(vast_lib PUBLIC cxx_std_20)
-
-find_package(fmt REQUIRED)
-target_link_libraries(vast_lib PRIVATE fmt::fmt)
 
 # ---- Declare executable ----
 

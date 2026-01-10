@@ -4,22 +4,13 @@
 
 project(vastTests LANGUAGES CXX)
 
-# ---- Dependencies ----
-
-find_package(Catch2 REQUIRED)
-include(Catch)
-
 # ---- Tests ----
 
 add_executable(vast_test source/vast_test.cpp)
-target_link_libraries(
-    vast_test PRIVATE
-    vast_lib
-    Catch2::Catch2WithMain
-)
+target_link_libraries(vast_test PRIVATE vast_lib)
 target_compile_features(vast_test PRIVATE cxx_std_20)
 
-catch_discover_tests(vast_test)
+add_test(NAME vast_test COMMAND vast_test)
 
 # ---- End-of-file commands ----
 

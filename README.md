@@ -1,6 +1,6 @@
 # vast
 
-This is a visualizer for the AST i built for the parser and the future compiler I'm trying to work on
+This is a visualizer for Abstract Syntax Trees.
 
 # Building and installing
 

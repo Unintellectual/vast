@@ -1,9 +1,8 @@
-#include <catch2/catch_test_macros.hpp>
-
 #include "lib.hpp"
 
-TEST_CASE("Name is vast", "[library]")
+auto main() -> int
 {
   auto const lib = library {};
-  REQUIRE(lib.name == "vast");
+
+  return lib.name == "vast" ? 0 : 1;
 }
